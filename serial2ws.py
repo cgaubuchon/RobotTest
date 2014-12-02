@@ -41,26 +41,6 @@ class McuProtocol(LineReceiver):
       print('Serial port connected.')
 
 
-   def lineReceived(self, line):
-      if self.debug:
-         print("Serial RX: {0}".format(line))
-
-      try:
-         ## parse data received from MCU
-         ##
-         data = [int(x) for x in line.split()]
-      except ValueError:
-         print('Unable to parse value {0}'.format(line))
-      else:
-         ## create payload for WAMP event
-         ##
-         payload = {u'id': data[0], u'value': data[1]}
-
-         ## publish WAMP event to all subscribers on topic
-         ##
-         self.session.publish(u"com.myapp.mcu.on_analog_value", payload)
-
-
    def controlServos(self, pitch):
       """
       This method is exported as RPC and can be called by connected clients

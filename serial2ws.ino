@@ -27,9 +27,9 @@ void loop() {
          digitalWrite(ledPin, LOW);
       } else if (inByte == '1') {
          digitalWrite(ledPin, HIGH);
-      }else if (inByte == '3') {
+      }else if (inByte == '2') {
          digitalWrite(ledPin, HIGH);
-      }else if (inByte == '4') {
+      }else if (inByte == '3') {
          digitalWrite(ledPin, LOW);
       }
    }
