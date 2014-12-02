@@ -109,8 +109,8 @@ class McuComponent(ApplicationSession):
          print('Could not open serial port: {0}'.format(e))
          self.leave()
       else:
-         yield self.register(serialProtocol.controlLed, u"com.myapp.mcu.control_led")
-         yield self.register(serialProtocol.controlLed2, u"com.myapp.mcu.control_led2")
+         self.register(serialProtocol.controlLed, u"com.myapp.mcu.control_led")
+         self.register(serialProtocol.controlLed2, u"com.myapp.mcu.control_led2")
 
 
 

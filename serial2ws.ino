@@ -65,7 +65,7 @@ void loop() {
       }else if (inByte == '3') {
          digitalWrite(ledPin2, HIGH);
       }else if (inByte == '4') {
-         digitalWrite(ledPin2, HIGH);
+         digitalWrite(ledPin2, LOW);
       }
    }
    // limit update frequency to 50Hz
