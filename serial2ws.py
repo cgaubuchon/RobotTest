@@ -61,28 +61,20 @@ class McuProtocol(LineReceiver):
          self.session.publish(u"com.myapp.mcu.on_analog_value", payload)
 
 
-   def controlLed(self, turnOn):
+   def controlServos(self, pitch):
       """
       This method is exported as RPC and can be called by connected clients
       """
-      if turnOn:
-         payload = b'1'
-      else:
+      if pitch == "slider":
          payload = b'0'
+      elif pitch == "curve":
+         payload = b'1'
+      elif pitch == "fastball":
+         payload = b'2'
+      else:
+         payload = b'3'
       if self.debug:
          print("Serial TX: {0}".format(payload))
-      self.transport.write(payload)
-
-   def controlLed2(self, turnOn):
-      """
-      This method is exported as RPC and can be called by connected clients
-      """
-      if turnOn:
-         payload = b'3'
-      else:
-         payload = b'4'
-      if self.debug:
-         print("Serial TX: {1}".format(payload))
       self.transport.write(payload)
 
 
@@ -109,8 +101,7 @@ class McuComponent(ApplicationSession):
          print('Could not open serial port: {0}'.format(e))
          self.leave()
       else:
-         self.register(serialProtocol.controlLed, u"com.myapp.mcu.control_led")
-         self.register(serialProtocol.controlLed2, u"com.myapp.mcu.control_led2")
+         yield self.register(serialProtocol.controlServos, u"com.myapp.mcu.control_servo")
 
 
 

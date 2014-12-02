@@ -7,21 +7,11 @@
       <script>
          var session = null;
 
-         function controlLed(turnOn) {
-            session.call("com.myapp.mcu.control_led", [turnOn]);
-         }
-         function controlLed2(turnOn) {
-            session.call("com.myapp.mcu.control_led2", [turnOn]);
-         }
-
-         function updateEventCnt() {
-            document.getElementById("event-cnt").innerHTML = Math.round(eventCnt/eventCntUpdateInterval) + " events/s";
-            eventCnt = 0;
+         function controlServo(turnOn) {
+            session.call("com.myapp.mcu.control_servo", [turnOn]);
          }
 
          window.onload = function (){
-
-
             // the URL of the WAMP Router (e.g. Crossbar.io)
             //
             var wsuri;
@@ -49,13 +39,10 @@
    <body>
       <h1>Autobahn WebSocket: MCU to WS Gateway Demo</h1>
 
-      <h2>Control LED</h2>
-      <button onclick="controlLed(false)">LED Off</button>
-      <button onclick="controlLed(true)">LED On</button>
-
-      <h2>Control LED 2</h2>
-      <button onclick="controlLed2(false)">LED Off</button>
-      <button onclick="controlLed2(true)">LED On</button>
+      <h2>Control Pitch</h2>
+      <button onclick="controlServo('slider')">Slider - LED Off</button>
+      <button onclick="controlServo('curve')">Curve - LED On</button>
+      <button onclick="controlServo('fastball')">Fastball - LED Off</button>
 
    </body>
  </html>
