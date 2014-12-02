@@ -17,6 +17,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 const int ledPin = 3;
+const int ledPin2 = 13;
 const int pot1Pin = 0;
 const int pot2Pin = 1;
 
@@ -47,39 +48,26 @@ void setup() {
 
    pinMode(ledPin, OUTPUT);
    digitalWrite(ledPin, LOW);
-}
-
-
-void getAnalog(int pin, int id, int *last) {
-   // read analog value and map/constrain to output range
-   int cur = constrain(map(analogRead(pin), 0, 1023, minVal, maxVal), minVal, maxVal);
-  
-   // if value changed, forward on serial (as ASCII)
-   if (cur != *last) {
-      *last = cur;
-      port->print(id);
-      port->print('\t');
-      port->print(*last);
-      port->println();
-   }  
+   pinMode(ledPin2, OUTPUT);
+   digitalWrite(ledPin2, LOW);
 }
 
 
 void loop() {
-  
-   // control LED via commands read from serial  
+
+   // control LED via commands read from serial
    if (port->available()) {
       int inByte = port->read();
       if (inByte == '0') {
          digitalWrite(ledPin, LOW);
       } else if (inByte == '1') {
          digitalWrite(ledPin, HIGH);
+      }else if (inByte == '3') {
+         digitalWrite(ledPin2, HIGH);
+      }else if (inByte == '4') {
+         digitalWrite(ledPin2, HIGH);
       }
    }
-  
-   getAnalog(pot1Pin, 0, &last1);
-   getAnalog(pot2Pin, 1, &last2);
-
    // limit update frequency to 50Hz
    delay(20);
 }

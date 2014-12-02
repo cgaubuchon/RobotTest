@@ -73,6 +73,18 @@ class McuProtocol(LineReceiver):
          print("Serial TX: {0}".format(payload))
       self.transport.write(payload)
 
+   def controlLed2(self, turnOn):
+      """
+      This method is exported as RPC and can be called by connected clients
+      """
+      if turnOn:
+         payload = b'3'
+      else:
+         payload = b'4'
+      if self.debug:
+         print("Serial TX: {1}".format(payload))
+      self.transport.write(payload)
+
 
 
 class McuComponent(ApplicationSession):
@@ -98,6 +110,7 @@ class McuComponent(ApplicationSession):
          self.leave()
       else:
          yield self.register(serialProtocol.controlLed, u"com.myapp.mcu.control_led")
+         yield self.register(serialProtocol.controlLed2, u"com.myapp.mcu.control_led2")
 
 
 
